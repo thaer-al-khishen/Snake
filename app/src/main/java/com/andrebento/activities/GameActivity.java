@@ -135,7 +135,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        speed = speed - 35;
+                        speed = speed - 30;
                     }
                 },
                 delay
