@@ -11,7 +11,7 @@ The changes I've made to the original repo:
 
 4- Implement high score feature with SharedPreferences
 
-5- Make the game more challenging by decreasing the size of the field from 20*10 to 14*7
+5- Make the game more challenging by decreasing the size of the field from 20x10 to 14x7
 
 6- Have the snake start off with 2 pieces instead of 3 
 
