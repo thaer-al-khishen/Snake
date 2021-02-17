@@ -33,6 +33,7 @@
             android:layout_gravity="right|top"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:visibility="gone"
             android:src="@drawable/settings_logo"
             android:onClick="onButtonClick"/>
 
@@ -48,7 +49,7 @@
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jogar"
+            android:text="Play"
             android:layout_gravity="center"
             android:onClick="onButtonClick"/>
 
@@ -64,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resultados"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:onClick="onButtonClick"/>
 
