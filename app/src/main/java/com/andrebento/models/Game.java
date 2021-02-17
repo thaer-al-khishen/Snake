@@ -61,6 +61,22 @@ public class Game {
         return this.lifes;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        Game.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int setHeight(int height){
+        return Game.height = height;
+    }
+
     public void update() {
         snake.move();
         snake.eat(this, food);

@@ -1,6 +1,7 @@
 package com.andrebento.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +9,8 @@ import android.view.View;
 
 import com.andrebento.interfaces.Constants;
 import com.andrebento.models.Game;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by andre on 18/01/2017.
@@ -18,7 +21,7 @@ public class GameView extends View {
 
     public GameView(Context context) {
         super(context);
-        this.snakeGame = null;
+        this.snakeGame = new Game(context, 700, 700);
     }
 
     public Game getSnakeGame() {
@@ -34,13 +37,14 @@ public class GameView extends View {
         int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
         int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
         this.setMeasuredDimension(parentWidth, parentHeight);
+        snakeGame.setWidth(parentWidth);
+        snakeGame.setHeight(parentHeight);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         //drawGrid(canvas);
         snakeGame.draw(canvas);
         //printLog();
@@ -48,7 +52,7 @@ public class GameView extends View {
 
     private void printLog() {
         System.out.println("L:"+Game.width+"\tA:"+Game.height+"\n"
-            +"HC:"+ Constants.nHorizontalCells+"\t"+"VC:"+Constants.nVerticalCells);
+                +"HC:"+ Constants.nHorizontalCells+"\t"+"VC:"+Constants.nVerticalCells);
     }
 
     private void drawGrid(Canvas canvas) {
