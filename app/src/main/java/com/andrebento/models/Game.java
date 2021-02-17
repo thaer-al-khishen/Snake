@@ -18,6 +18,7 @@ public class Game {
     private Snake snake;
     private Food food;
     private RedBox redBox;
+    private BlueBox bluebox;
 
     private int score;
     private int lifes;
@@ -32,6 +33,7 @@ public class Game {
         this.snake = new Snake(context);
         this.food = new Food(context);
         this.redBox = new RedBox(context);
+        this.bluebox = new BlueBox(context);
         this.score = 0;
         this.lifes = 3;
     }
@@ -82,7 +84,7 @@ public class Game {
 
     public void update() {
         snake.move();
-        snake.eat(this, food, redBox);
+        snake.eat(this, food, redBox, bluebox);
         if(snake.detectColision()) {
             lifes--;
             if(lifes <= 0)
@@ -94,5 +96,6 @@ public class Game {
         snake.draw(canvas);
         food.draw(canvas);
         redBox.draw(canvas);
+        bluebox.draw(canvas);
     }
 }

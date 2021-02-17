@@ -160,7 +160,7 @@ public class Snake {
         }
     }
 
-    public void eat(Game snakeGame, Food food, RedBox redBox) {
+    public void eat(Game snakeGame, Food food, RedBox redBox, BlueBox blueBox) {
         SnakePiece snakeHead = pieces.get(0);
         if(snakeHead.getPosX() == food.getPosX() && snakeHead.getPosY() == food.getPosY()) {
             snakeGame.setScore(snakeGame.getScore() + 1);
@@ -174,12 +174,26 @@ public class Snake {
                 shrink();
                 updateImageDirections();
             }
+            //Make both the red and blue boxes disappear upon taking the red box
+            blueBox.hideBluebox();
             redBox.hideRedbox();
             waitThenAddRedBox(redBox);
+            waitThenAddBlueBox(blueBox);
+        }
+
+        if (snakeHead.getPosX() == blueBox.getPosX() && snakeHead.getPosY() == blueBox.getPosY()) {
+            //Increase the snake's size without increasing the score
+            growth();
+
+            //Make both the red and blue boxes disappear upon taking the blue box
+            blueBox.hideBluebox();
+            redBox.hideRedbox();
+            waitThenAddRedBox(redBox);
+            waitThenAddBlueBox(blueBox);
         }
     }
 
-    //Function that makes red box disappear for 10 seconds then reappear for 3 seconds or until user consumes the red box
+    //Function that makes the red box disappear for 10 seconds then reappear for 3 seconds or until user consumes the red box
     private void waitThenAddRedBox(final RedBox redBox) {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -190,9 +204,38 @@ public class Snake {
                                 new java.util.TimerTask() {
                                     @Override
                                     public void run() {// After 13 seconds
+                                        //If the hideRedBox function is not triggered enter this block of code, this helps avoid repositioning the box twice
+                                        //This hideRedBox function is only triggered either here or when the user consumes the red box
                                         if (redBox.getPosX() != -50 && redBox.getPosY() != -50) {
                                             redBox.hideRedbox();
                                             waitThenAddRedBox(redBox);
+                                        }
+                                    }
+                                },
+                                3000
+                        );
+                    }
+                },
+                10000
+        );
+    }
+
+    //Function that makes the blue box disappear for 10 seconds then reappear for 3 seconds or until user consumes the red box
+    private void waitThenAddBlueBox(final BlueBox blueBox) {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        blueBox.setRandomPosition();  //After 10 seconds
+                        new java.util.Timer().schedule(
+                                new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {// After 13 seconds
+                                        //If the hideBlueBox function is not triggered enter this block of code, this helps avoid repositioning the box twice
+                                        //This hideBlueBox function is only triggered either here or when the user consumes the blue box
+                                        if (blueBox.getPosX() != -50 && blueBox.getPosY() != -50) {
+                                            blueBox.hideBluebox();
+                                            waitThenAddBlueBox(blueBox);
                                         }
                                     }
                                 },
