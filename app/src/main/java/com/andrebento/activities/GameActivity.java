@@ -22,6 +22,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     protected GameView snakeGameView;
     private Thread gameThread;
+    private int speed = 175;
 
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
@@ -77,7 +78,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         }
                     });
                     try {
-                        Thread.sleep(snakeGameView.getSnakeGame().getSleepTime());
+                        Thread.sleep(speed);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
