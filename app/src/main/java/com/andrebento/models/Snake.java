@@ -19,10 +19,8 @@ public class Snake {
         this.context = context;
         this.pieces = new ArrayList<>();
         this.pieces.add(new SnakeHead(context));
-        this.pieces.add(new SnakeBody(context, pieces.get(0).getPosX() - 1,
+        this.pieces.add(new SnakeTail(context, pieces.get(0).getPosX() - 1,
                 pieces.get(0).getPosY(), pieces.get(0).getDirection()));
-        this.pieces.add(new SnakeTail(context, pieces.get(1).getPosX() - 1,
-                pieces.get(1).getPosY(), pieces.get(1).getDirection()));
     }
 
     public void setHeadDirection(int newDirection) {
