@@ -213,4 +213,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
             return 0;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainMenuActivity.class));
+    }
 }
