@@ -1,5 +1,5 @@
 # Snake
-A simple android Snake game
+A challenging android Snake game. Change the direction of the snake by swiping the screen. Note that it can't go in the opposite direction of its current course.
 
 The changes I've made to the original repo:
 
