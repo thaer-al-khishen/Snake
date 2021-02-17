@@ -138,13 +138,70 @@ public class Snake {
             }
     }
 
-    public void eat(Game snakeGame, Food food) {
+    private void shrink() {
+        SnakePiece snakeTail = pieces.get(pieces.size() - 1);
+        SnakePiece snakeBodyBeforeTail = pieces.get(pieces.size() - 2);
+        pieces.remove(snakeTail);
+        pieces.remove(snakeBodyBeforeTail);
+        pieces.add(snakeTail);
+        switch (snakeBodyBeforeTail.getDirection()) {
+            case Constants.UP:
+                snakeTail.setPosY(snakeTail.getPosY() - 1);
+                break;
+            case Constants.RIGHT:
+                snakeTail.setPosX(snakeTail.getPosX() + 1);
+                break;
+            case Constants.DOWN:
+                snakeTail.setPosY(snakeTail.getPosY() + 1);
+                break;
+            case Constants.LEFT:
+                snakeTail.setPosX(snakeTail.getPosX() - 1);
+                break;
+        }
+    }
+
+    public void eat(Game snakeGame, Food food, RedBox redBox) {
         SnakePiece snakeHead = pieces.get(0);
         if(snakeHead.getPosX() == food.getPosX() && snakeHead.getPosY() == food.getPosY()) {
             snakeGame.setScore(snakeGame.getScore() + 1);
             growth();
             food.setRandomPosition();
         }
+
+        if (snakeHead.getPosX() == redBox.getPosX() && snakeHead.getPosY() == redBox.getPosY()) {
+            //The red box only works if the snake is larger than 2 pieces
+            if (pieces.size() > 2) {
+                shrink();
+                updateImageDirections();
+            }
+            redBox.hideRedbox();
+            waitThenAddRedBox(redBox);
+        }
+    }
+
+    //Function that makes red box disappear for 10 seconds then reappear for 3 seconds or until user consumes the red box
+    private void waitThenAddRedBox(final RedBox redBox) {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        redBox.setRandomPosition();  //After 10 seconds
+                        new java.util.Timer().schedule(
+                                new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {// After 13 seconds
+                                        if (redBox.getPosX() != -50 && redBox.getPosY() != -50) {
+                                            redBox.hideRedbox();
+                                            waitThenAddRedBox(redBox);
+                                        }
+                                    }
+                                },
+                                3000
+                        );
+                    }
+                },
+                10000
+        );
     }
 
     private void growth() {
