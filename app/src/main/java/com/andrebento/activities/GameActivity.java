@@ -22,6 +22,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     protected GameView snakeGameView;
     private Thread gameThread;
+    private int speed = 175;
 
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
@@ -59,6 +60,15 @@ public class GameActivity extends Activity implements View.OnClickListener {
         gameThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                //Make the game faster after 20 seconds
+                AccelerateAfterDelay(20000);
+
+                //Make the game faster after 40 seconds
+                AccelerateAfterDelay(40000);
+
+                //Make the game faster after 60 seconds
+                AccelerateAfterDelay(60000);
+
                 while(snakeGameView.getSnakeGame().isRunning()) {
                     snakeGameView.getSnakeGame().update();
                     runOnUiThread(new Runnable() {
@@ -77,7 +87,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         }
                     });
                     try {
-                        Thread.sleep(snakeGameView.getSnakeGame().getSleepTime());
+                        Thread.sleep(speed);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -86,6 +96,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
         });
 
         prepareTouchSettings();
+    }
+
+    private void AccelerateAfterDelay(int delay) {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        speed = speed - 35;
+                    }
+                },
+                delay
+        );
     }
 
     @Override
