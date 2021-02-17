@@ -172,6 +172,12 @@ public class Snake {
 
     public boolean detectColision() {
         SnakeHead snakeHead = (SnakeHead) pieces.get(0);
+
+        //Implement collision between snake and walls
+        SnakePiece snakePiece = pieces.get(1);
+        if (Math.abs(snakeHead.getPosX() - snakePiece.getPosX()) > 1) return true;
+        if (Math.abs(snakeHead.getPosY() - snakePiece.getPosY()) > 1) return true;
+
         for(int i = 1; i < pieces.size() - 1; i++)
             if(snakeHead.getPosX() == pieces.get(i).getPosX() &&
                     snakeHead.getPosY() == pieces.get(i).getPosY())
