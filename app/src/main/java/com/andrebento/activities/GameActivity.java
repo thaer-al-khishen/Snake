@@ -1,11 +1,13 @@
 package com.andrebento.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,10 +21,12 @@ import com.andrebento.views.GameView;
 public class GameActivity extends Activity implements View.OnClickListener {
     TextView tvScore;
     ImageView ivHeart1, ivHeart2, ivHeart3;
+    Button restartButton;
 
     protected GameView snakeGameView;
     private Thread gameThread;
     private int speed = 175;
+    int flag = 0;
 
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
@@ -37,6 +41,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         ivHeart1 = (ImageView) findViewById(R.id.iv_life_1);
         ivHeart2 = (ImageView) findViewById(R.id.iv_life_2);
         ivHeart3 = (ImageView) findViewById(R.id.iv_life_3);
+        restartButton = (Button) findViewById(R.id.restartButton);
 
         this.snakeGameView = new GameView(getApplicationContext());
         ((FrameLayout) findViewById(R.id.fl_game_view)).addView(snakeGameView);
@@ -76,6 +81,21 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         public void run() {
                             tvScore.setText(String.valueOf(snakeGameView.getSnakeGame().getScore()));
                             switch (snakeGameView.getSnakeGame().getLifes()) {
+                                case 0:
+                                    ivHeart1.setVisibility(View.INVISIBLE);
+                                    restartButton.setVisibility(View.VISIBLE);
+                                    flag = 1;
+                                    restartButton.setEnabled(true);
+                                    restartButton.setOnClickListener(new View.OnClickListener(){
+                                        @Override
+                                        //On click function
+                                        public void onClick(View view) {
+                                            //Restart game
+                                            Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    break;
                                 case 1:
                                     ivHeart2.setVisibility(View.INVISIBLE);
                                     break;
@@ -132,7 +152,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
+        if (flag == 1) {
+            Intent intent = new Intent(GameActivity.this, GameActivity.class);
+            startActivity(intent);
+        }
     }
 
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {

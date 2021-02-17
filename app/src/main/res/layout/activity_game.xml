@@ -65,7 +65,7 @@
         </LinearLayout>
 
     </LinearLayout>
-    
+
     <FrameLayout
         android:id="@+id/fl_game_view"
         android:layout_width="match_parent"
@@ -75,6 +75,17 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        android:background="@drawable/game_view_border"/>
+        android:background="@drawable/game_view_border">
+        <Button
+            android:id="@+id/restartButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play again?"
+            android:layout_gravity="center"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:background="@drawable/game_view_border"
+            android:padding="16dp"/>
+    </FrameLayout>
 
 </LinearLayout>
