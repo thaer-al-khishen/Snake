@@ -141,7 +141,7 @@ public class Snake {
     public void eat(Game snakeGame, Food food) {
         SnakePiece snakeHead = pieces.get(0);
         if(snakeHead.getPosX() == food.getPosX() && snakeHead.getPosY() == food.getPosY()) {
-            snakeGame.setScore(snakeGame.getScore() + 2);
+            snakeGame.setScore(snakeGame.getScore() + 1);
             growth();
             food.setRandomPosition();
         }
