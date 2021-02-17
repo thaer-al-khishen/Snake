@@ -2,6 +2,7 @@ package com.andrebento.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -19,7 +20,7 @@ import com.andrebento.snake.SnakeApplication;
 import com.andrebento.views.GameView;
 
 public class GameActivity extends Activity implements View.OnClickListener {
-    TextView tvScore;
+    TextView tvScore, tvHighScore;
     ImageView ivHeart1, ivHeart2, ivHeart3;
     Button restartButton;
 
@@ -36,7 +37,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        //Initialize preferences
+        final SharedPreferences preferences = getSharedPreferences("myPref", MODE_PRIVATE);
+        final int highScoreInPreferences = preferences.getInt("highScoreInPreferences", 0);
+
         tvScore = (TextView) findViewById(R.id.tv_score);
+        tvHighScore = (TextView) findViewById(R.id.tv_high_score);
 
         ivHeart1 = (ImageView) findViewById(R.id.iv_life_1);
         ivHeart2 = (ImageView) findViewById(R.id.iv_life_2);
@@ -54,6 +60,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     snakeGameView.setSnakeGame(new Game(getApplicationContext(), snakeGameView.getMeasuredWidth(),
                             snakeGameView.getMeasuredHeight()));
                     tvScore.setText(String.valueOf(snakeGameView.getSnakeGame().getScore()));
+                    if (snakeGameView.getSnakeGame().getScore() > highScoreInPreferences)
+                        preferences.edit().putInt("highScoreInPreferences", snakeGameView.getSnakeGame().getScore()).apply();
+                    tvHighScore.setText(String.valueOf(highScoreInPreferences));
                     gameThread.start();
                 }
             });
@@ -80,6 +89,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void run() {
                             tvScore.setText(String.valueOf(snakeGameView.getSnakeGame().getScore()));
+                            if (snakeGameView.getSnakeGame().getScore() > highScoreInPreferences)
+                                preferences.edit().putInt("highScoreInPreferences", snakeGameView.getSnakeGame().getScore()).apply();
+                            tvHighScore.setText(String.valueOf(highScoreInPreferences));
                             switch (snakeGameView.getSnakeGame().getLifes()) {
                                 case 0:
                                     ivHeart1.setVisibility(View.INVISIBLE);
