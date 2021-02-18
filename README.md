@@ -16,3 +16,5 @@ The changes I've made to the original repo:
 6- Have the snake start off with 2 pieces instead of 3 
 
 7- Modify the landing page to be in English
+
+![](app/src/main/res/drawable/snakegame.jpg)
